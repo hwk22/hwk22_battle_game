@@ -31,17 +31,14 @@ TextureInfo AssetsManager::GetTextureSpace(uint32_t width, uint32_t height) {
   TextureInfo texture_info{};
   texture_info.width = width;
   texture_info.height = height;
-  width++;
-  height++;
-  while (current_head_x_ + width >= kParticleTextureSize ||
+  ++height, ++width;
+  while (kParticleTextureSize - width <= current_head_x_ ||
          current_head_y_ + height >= kParticleTextureSize) {
     if (current_head_x_ + width >= kParticleTextureSize) {
       current_head_x_ = 0;
       current_head_y_ = current_bottom_y_;
     } else if (current_head_y_ + height >= kParticleTextureSize) {
-      current_head_x_ = 0;
-      current_head_y_ = 0;
-      current_bottom_y_ = 0;
+      current_head_x_ = current_head_y_ = current_bottom_y_ = 0;
       current_texture_id_ = textures_.size();
       textures_.emplace_back(kParticleTextureSize, kParticleTextureSize);
     }
