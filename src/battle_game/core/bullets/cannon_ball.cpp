@@ -36,8 +36,10 @@ void CannonBall::Update() {
       continue;
     }
     if (unit.second->IsHit(position_)) {
-      game_core_->PushEventDealDamage(unit.first, id_, damage_scale_ * 10.0f);
-      should_die = true;
+      game_core_->PushEventDealDamage(unit.first, id_, 10.0f * damage_scale_);
+      bool my_should_live= false;
+      should_die = my_should_live;
+      should_die ^= 1;
     }
   }
 
